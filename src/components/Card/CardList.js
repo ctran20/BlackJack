@@ -3,10 +3,9 @@ import Card from './Card';
 
 const CardList = (props) => {
   const { cards } = props;
-  const cardComponent = cards.map((rank, suit) => {
-    return <Card rank={rank} deck={suit} />;
+  const cardComponent = cards.map((user, i) => {
+    return <Card key={i} rank={cards[i].rank} deck={cards[i].suit} />;
   });
-
   return <div>{cardComponent}</div>;
 };
 
