@@ -1,9 +1,4 @@
-export const Suits = {
-  SPADES: '♠',
-  HEARTS: '♥',
-  DIAMONDS: '♦',
-  CLUBS: '♣',
-};
+export const Suits = ['♠', '♥', '♦', '♣'];
 
 export const Ranks = [
   'A',

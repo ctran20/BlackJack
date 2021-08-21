@@ -7,7 +7,7 @@ const Card = (props) => {
       className="bg-white dib br4 ba b--black ma2 grow f1 flex-column"
       style={{ width: 200, height: 280 }}
     >
-      {true ? (
+      {false ? (
         <div className="cardBack br4 ba b--black center" />
       ) : (
         <div
