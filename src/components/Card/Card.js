@@ -2,34 +2,27 @@ import React from 'react';
 import './Card.css';
 
 const Card = (props) => {
-  if (true) {
-    return (
-      <div
-        className="bg-white dib br3 ma2 grow f1 flex-column"
-        style={{ width: 200, height: 280 }}
-      >
-        <div className="cardBack br3 center" />
-      </div>
-    );
-  } else {
-    return (
-      <div
-        className="bg-white dib br3 pa3 ma2 grow f1 flex-column"
-        style={{ width: 200, height: 280 }}
-      >
+  return (
+    <div
+      className="bg-white dib br4 ba b--black ma2 grow f1 flex-column"
+      style={{ width: 200, height: 280 }}
+    >
+      {true ? (
+        <div className="cardBack br4 ba b--black center" />
+      ) : (
         <div
           className={
             props.deck === '♠' || props.deck === '♣'
-              ? 'center black'
-              : 'center red'
+              ? 'center black ma3'
+              : 'center red ma3'
           }
         >
           <h2>{props.rank}</h2>
           <h2>{props.deck}</h2>
         </div>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 };
 
 export default Card;
