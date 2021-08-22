@@ -7,31 +7,6 @@ import './App.css';
 
 function App() {
   const [playerCards, setPlayerCards] = useState([]);
-  const [dealerRank1] = useState(
-    Ranks[Math.floor(Math.random() * Ranks.length)]
-  );
-  const [dealerRank2] = useState(
-    Ranks[Math.floor(Math.random() * Ranks.length)]
-  );
-  const [dealerSuit1] = useState(
-    Suits[Math.floor(Math.random() * Suits.length)]
-  );
-  const [dealerSuit2] = useState(
-    Suits[Math.floor(Math.random() * Suits.length)]
-  );
-
-  const [playerRank1] = useState(
-    Ranks[Math.floor(Math.random() * Ranks.length)]
-  );
-  const [playerRank2] = useState(
-    Ranks[Math.floor(Math.random() * Ranks.length)]
-  );
-  const [playerSuit1] = useState(
-    Suits[Math.floor(Math.random() * Suits.length)]
-  );
-  const [playerSuit2] = useState(
-    Suits[Math.floor(Math.random() * Suits.length)]
-  );
 
   const Hit = () => {
     const newCards = playerCards.concat({
