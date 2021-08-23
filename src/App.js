@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Card from './components/Card/Card';
 import CardList from './components/Card/CardList';
 import { Suits, Ranks, RanksValues, Layouts } from './constants/CardInfo';
+import { useDispatch, useSelector } from 'react-redux';
+import { hit } from '../redux/actions';
 import 'tachyons';
 import './App.css';
 
