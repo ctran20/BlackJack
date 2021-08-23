@@ -7,6 +7,17 @@ import './App.css';
 
 function App() {
   const [playerCards, setPlayerCards] = useState([]);
+  const dealerRank1 = Ranks[Math.floor(Math.random() * Ranks.length)];
+  const dealerRank2 = Ranks[Math.floor(Math.random() * Ranks.length)];
+
+  const dealerSuit1 = Suits[Math.floor(Math.random() * Suits.length)];
+  const dealerSuit2 = Suits[Math.floor(Math.random() * Suits.length)];
+
+  const playerRank1 = Ranks[Math.floor(Math.random() * Ranks.length)];
+  const playerRank2 = Ranks[Math.floor(Math.random() * Ranks.length)];
+
+  const playerSuit1 = Suits[Math.floor(Math.random() * Suits.length)];
+  const playerSuit2 = Suits[Math.floor(Math.random() * Suits.length)];
 
   const Hit = () => {
     const newCards = playerCards.concat({
