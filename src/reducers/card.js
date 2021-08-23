@@ -1,13 +1,15 @@
-import { HIT } from "../actions/card"
+import { HIT } from '../actions/card';
 
-const startedCards ={
-  playerCards = []
-}
+const startedCards = {
+  playerCards: [],
+};
 
 export const playerChoice = (state = startedCards, action) => {
   switch (action.type) {
     case HIT:
-      return Object.assign({}, state, {playerCards: playerCards.concat(action.payload)});
+      return Object.assign({}, state, {
+        playerCards: state.concat(action.payload),
+      });
     default:
       return state;
   }
