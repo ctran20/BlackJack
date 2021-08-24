@@ -34,8 +34,6 @@ function App() {
   //   console.log(playerScore);
   // }, [playerCards]);
 
-  const StartGame = () => {};
-
   const Hit = () => {
     const newCards = {
       rank: Ranks[Math.floor(Math.random() * Ranks.length)],
@@ -45,11 +43,9 @@ function App() {
 
     setPlayerScore(playerScore + RanksValues[newCards.rank]);
     setPlayerCards(updatedCards);
-    console.log(playerScore);
-    console.log(dealerScore);
   };
 
-  const Stand = () => {
+  const StartGame = () => {
     setGameState('GAME');
     setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
     setDealerScore(RanksValues[dealer.rank2] + RanksValues[dealer.rank2]);
@@ -70,7 +66,7 @@ function App() {
         />
       </div>
       <div className="center">
-        <h2>BlackJack</h2>
+        <h1>BlackJack</h1>
       </div>
       <div className="center ma3">
         <Card
@@ -92,7 +88,7 @@ function App() {
             style={{ width: 150 }}
             className="pa3 ma3 ba bg-yellow grow"
             type="submit"
-            onClick={Stand}
+            onClick={StartGame}
           >
             Start
           </button>
