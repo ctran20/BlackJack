@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Card from './components/Card/Card';
 import CardList from './components/Card/CardList';
 import { Suits, Ranks, RanksValues, Layouts } from './constants/CardInfo';
@@ -10,17 +10,24 @@ import './App.css';
 function App() {
   const [gameState, setGameState] = useState('MENU');
   const [playerCards, setPlayerCards] = useState([]);
-  const dealerRank1 = Ranks[Math.floor(Math.random() * Ranks.length)];
-  const dealerRank2 = Ranks[Math.floor(Math.random() * Ranks.length)];
 
-  const dealerSuit1 = Suits[Math.floor(Math.random() * Suits.length)];
-  const dealerSuit2 = Suits[Math.floor(Math.random() * Suits.length)];
+  const [player, setPlayer] = useState({
+    playerRank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+    playerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+    playerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
+    playerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
+    playerScore: 0,
+  });
 
-  const playerRank1 = Ranks[Math.floor(Math.random() * Ranks.length)];
-  const playerRank2 = Ranks[Math.floor(Math.random() * Ranks.length)];
+  const [dealer, setDealer] = useState({
+    dealerRank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+    dealerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+    dealerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
+    dealerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
+    dealerScore: 0,
+  });
 
-  const playerSuit1 = Suits[Math.floor(Math.random() * Suits.length)];
-  const playerSuit2 = Suits[Math.floor(Math.random() * Suits.length)];
+  useEffect(() => {}, [playerCards]);
 
   const Hit = () => {
     const newCards = playerCards.concat({
@@ -30,17 +37,19 @@ function App() {
     setPlayerCards(newCards);
   };
 
+  const Stand = () => {};
+
   return (
     <div>
       <div className="center ma3">
         <Card
-          rank={dealerRank1}
-          deck={dealerSuit1}
+          rank={dealer.dealerRank1}
+          deck={dealer.dealerSuit1}
           side={gameState === 'MENU' ? false : true}
         />
         <Card
-          rank={dealerRank2}
-          deck={dealerSuit2}
+          rank={dealer.dealerRank2}
+          deck={dealer.dealerSuit2}
           side={gameState === 'MENU' ? false : true}
         />
       </div>
@@ -49,13 +58,13 @@ function App() {
       </div>
       <div className="center ma3">
         <Card
-          rank={playerRank1}
-          deck={playerSuit1}
+          rank={player.playerRank1}
+          deck={player.playerSuit1}
           side={gameState === 'MENU' ? false : true}
         />
         <Card
-          rank={playerRank2}
-          deck={playerSuit2}
+          rank={player.playerRank2}
+          deck={player.playerSuit2}
           side={gameState === 'MENU' ? false : true}
         />
         <CardList cards={playerCards} />
