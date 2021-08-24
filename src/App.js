@@ -12,26 +12,29 @@ function App() {
   const [playerCards, setPlayerCards] = useState([]);
 
   const [player, setPlayer] = useState({
-    playerRank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-    playerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-    playerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
-    playerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
+    rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+    rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+    suit1: Suits[Math.floor(Math.random() * Suits.length)],
+    suit2: Suits[Math.floor(Math.random() * Suits.length)],
   });
 
   const [dealer, setDealer] = useState({
-    dealerRank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-    dealerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-    dealerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
-    dealerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
+    rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+    rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+    suit1: Suits[Math.floor(Math.random() * Suits.length)],
+    suit2: Suits[Math.floor(Math.random() * Suits.length)],
   });
 
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
+  const [stand, setStand] = useState('');
 
   // useEffect(() => {
   //   setPlayerScore(playerScore + RanksValues[playerCards[-1].rank]);
   //   console.log(playerScore);
   // }, [playerCards]);
+
+  const StartGame = () => {};
 
   const Hit = () => {
     const newCards = {
@@ -41,24 +44,28 @@ function App() {
     const updatedCards = playerCards.concat(newCards);
 
     setPlayerScore(playerScore + RanksValues[newCards.rank]);
-    console.log(playerScore);
-
     setPlayerCards(updatedCards);
+    console.log(playerScore);
+    console.log(dealerScore);
   };
 
-  const Stand = () => {};
+  const Stand = () => {
+    setGameState('GAME');
+    setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
+    setDealerScore(RanksValues[dealer.rank2] + RanksValues[dealer.rank2]);
+  };
 
   return (
     <div>
       <div className="center ma3">
         <Card
-          rank={dealer.dealerRank1}
-          deck={dealer.dealerSuit1}
+          rank={dealer.rank1}
+          deck={dealer.suit1}
           side={gameState === 'MENU' ? false : true}
         />
         <Card
-          rank={dealer.dealerRank2}
-          deck={dealer.dealerSuit2}
+          rank={dealer.rank2}
+          deck={dealer.suit2}
           side={gameState === 'MENU' ? false : true}
         />
       </div>
@@ -67,13 +74,13 @@ function App() {
       </div>
       <div className="center ma3">
         <Card
-          rank={player.playerRank1}
-          deck={player.playerSuit1}
+          rank={player.rank1}
+          deck={player.suit1}
           side={gameState === 'MENU' ? false : true}
         />
         <Card
-          rank={player.playerRank2}
-          deck={player.playerSuit2}
+          rank={player.rank2}
+          deck={player.suit2}
           side={gameState === 'MENU' ? false : true}
         />
         <CardList cards={playerCards} />
@@ -85,9 +92,7 @@ function App() {
             style={{ width: 150 }}
             className="pa3 ma3 ba bg-yellow grow"
             type="submit"
-            onClick={() => {
-              setGameState('GAME');
-            }}
+            onClick={Stand}
           >
             Start
           </button>
@@ -106,12 +111,26 @@ function App() {
               style={{ width: 150 }}
               className="pa3 ma3 ba bg-yellow grow"
               type="submit"
-              onClick={() => {}}
+              onClick={() => {
+                setStand(
+                  'https://media.comicbook.com/2019/11/the-world-jojo-s-bizarre-adventure-1194427-1280x0.jpeg'
+                );
+              }}
             >
               Stand
             </button>
           </div>
         )}
+      </div>
+      <div className="center">
+        <h1>Dealer: {dealerScore}</h1>
+      </div>
+      <div className="center">
+        <h1>Player: {playerScore}</h1>
+      </div>
+
+      <div className="center">
+        <img src={stand} />
       </div>
     </div>
   );
