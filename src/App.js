@@ -16,7 +16,6 @@ function App() {
     playerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
     playerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
     playerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
-    playerScore: 0,
   });
 
   const [dealer, setDealer] = useState({
@@ -24,17 +23,27 @@ function App() {
     dealerRank2: Ranks[Math.floor(Math.random() * Ranks.length)],
     dealerSuit1: Suits[Math.floor(Math.random() * Suits.length)],
     dealerSuit2: Suits[Math.floor(Math.random() * Suits.length)],
-    dealerScore: 0,
   });
 
-  useEffect(() => {}, [playerCards]);
+  const [playerScore, setPlayerScore] = useState(0);
+  const [dealerScore, setDealerScore] = useState(0);
+
+  // useEffect(() => {
+  //   setPlayerScore(playerScore + RanksValues[playerCards[-1].rank]);
+  //   console.log(playerScore);
+  // }, [playerCards]);
 
   const Hit = () => {
-    const newCards = playerCards.concat({
+    const newCards = {
       rank: Ranks[Math.floor(Math.random() * Ranks.length)],
       suit: Suits[Math.floor(Math.random() * Suits.length)],
-    });
-    setPlayerCards(newCards);
+    };
+    const updatedCards = playerCards.concat(newCards);
+
+    setPlayerScore(playerScore + RanksValues[newCards.rank]);
+    console.log(playerScore);
+
+    setPlayerCards(updatedCards);
   };
 
   const Stand = () => {};
