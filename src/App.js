@@ -20,20 +20,24 @@ function App() {
   const [gameState, setGameState] = useState(MENU);
   const [playerCards, setPlayerCards] = useState([]);
   const [title, setTitle] = useState('Black Jack');
+  const starterCard = [
+    {
+      rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+      rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit1: Suits[Math.floor(Math.random() * Suits.length)],
+      suit2: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+    {
+      rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
+      rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit1: Suits[Math.floor(Math.random() * Suits.length)],
+      suit2: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+  ];
 
-  const [player, setPlayer] = useState({
-    rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-    rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit1: Suits[Math.floor(Math.random() * Suits.length)],
-    suit2: Suits[Math.floor(Math.random() * Suits.length)],
-  });
+  const [player, setPlayer] = useState(starterCard[0]);
 
-  const [dealer, setDealer] = useState({
-    rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-    rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit1: Suits[Math.floor(Math.random() * Suits.length)],
-    suit2: Suits[Math.floor(Math.random() * Suits.length)],
-  });
+  const [dealer, setDealer] = useState(starterCard[1]);
 
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
@@ -60,6 +64,15 @@ function App() {
     }
   };
 
+  const Reset = () => {
+    setPlayer(starterCard[0]);
+    setDealer(starterCard[1]);
+    setPlayerScore(0);
+    setDealerScore(0);
+    setPlayerCards([]);
+    setTitle('Black Jack');
+  };
+
   const StartGame = () => {
     setGameState(GAME);
     setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
@@ -74,11 +87,7 @@ function App() {
           deck={dealer.suit1}
           side={gameState === MENU ? false : true}
         />
-        <Card
-          rank={dealer.rank2}
-          deck={dealer.suit2}
-          side={gameState === MENU ? false : true}
-        />
+        <Card rank={dealer.rank2} deck={dealer.suit2} side={false} />
       </div>
       <div className="center">
         <h1>{title}</h1>
@@ -98,16 +107,7 @@ function App() {
       </div>
 
       <div className="center">
-        {gameState === MENU ? (
-          <button
-            style={{ width: 150 }}
-            className="pa3 ma3 ba bg-yellow grow"
-            type="submit"
-            onClick={StartGame}
-          >
-            Start
-          </button>
-        ) : (
+        {gameState === GAME ? (
           <div>
             <button
               style={{ width: 150 }}
@@ -131,6 +131,22 @@ function App() {
               Stand
             </button>
           </div>
+        ) : (
+          <button
+            style={{ width: 150 }}
+            className="pa3 ma3 ba bg-yellow grow"
+            type="submit"
+            onClick={
+              gameState === MENU
+                ? StartGame
+                : () => {
+                    setGameState(MENU);
+                    Reset();
+                  }
+            }
+          >
+            {gameState === MENU ? 'Start' : 'Menu'}
+          </button>
         )}
       </div>
       <div className="center">
