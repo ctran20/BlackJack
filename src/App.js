@@ -20,6 +20,7 @@ import './App.css';
 function App() {
   const [gameState, setGameState] = useState(MENU);
   const [playerCards, setPlayerCards] = useState([]);
+  const [dealerCards, setDealerCards] = useState([]);
   const [title, setTitle] = useState('Black Jack');
   const starterCard = [
     {
@@ -65,6 +66,22 @@ function App() {
     }
   };
 
+  const DealerHit = () => {
+    const newCards = {
+      rank: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit: Suits[Math.floor(Math.random() * Suits.length)],
+    };
+    const updatedCards = dealerCards.concat(newCards);
+
+    setDealerScore(dealerScore + RanksValues[newCards.rank]);
+    setDealerCards(updatedCards);
+
+    if (dealerScore + RanksValues[newCards.rank] > 21) {
+      setTitle('You Win!');
+      setGameState(WIN);
+    }
+  };
+
   const Stand = () => {
     setGameState(STAND);
     if (playerScore > dealerScore) {
@@ -80,6 +97,7 @@ function App() {
     setPlayerScore(0);
     setDealerScore(0);
     setPlayerCards([]);
+    setDealerCards([]);
     setTitle('Black Jack');
   };
 
@@ -102,6 +120,7 @@ function App() {
           deck={dealer.suit2}
           side={gameState === STAND ? true : false}
         />
+        <CardList cards={dealerCards} />
       </div>
       <div className="center">
         <h1>{title}</h1>
@@ -139,6 +158,14 @@ function App() {
               onClick={Stand}
             >
               Stand
+            </button>
+            <button
+              style={{ width: 150 }}
+              className="pa3 ma3 ba bg-yellow grow"
+              type="submit"
+              onClick={DealerHit}
+            >
+              Dealer Hit
             </button>
           </div>
         ) : (
