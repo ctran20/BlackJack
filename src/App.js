@@ -10,6 +10,7 @@ import {
   LOSE,
   GAME,
   MENU,
+  STAND,
 } from './constants/CardInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { hit } from './actions/card';
@@ -64,6 +65,15 @@ function App() {
     }
   };
 
+  const Stand = () => {
+    setGameState(STAND);
+    if (playerScore > dealerScore) {
+      setTitle('You Win!');
+    } else {
+      setTitle('You Lose!');
+    }
+  };
+
   const Reset = () => {
     setPlayer(starterCard[0]);
     setDealer(starterCard[1]);
@@ -76,7 +86,7 @@ function App() {
   const StartGame = () => {
     setGameState(GAME);
     setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
-    setDealerScore(RanksValues[dealer.rank2] + RanksValues[dealer.rank2]);
+    setDealerScore(RanksValues[dealer.rank1] + RanksValues[dealer.rank2]);
   };
 
   return (
@@ -87,7 +97,11 @@ function App() {
           deck={dealer.suit1}
           side={gameState === MENU ? false : true}
         />
-        <Card rank={dealer.rank2} deck={dealer.suit2} side={false} />
+        <Card
+          rank={dealer.rank2}
+          deck={dealer.suit2}
+          side={gameState === STAND ? true : false}
+        />
       </div>
       <div className="center">
         <h1>{title}</h1>
@@ -122,11 +136,7 @@ function App() {
               style={{ width: 150 }}
               className="pa3 ma3 ba bg-yellow grow"
               type="submit"
-              onClick={() => {
-                setStand(
-                  'https://media.comicbook.com/2019/11/the-world-jojo-s-bizarre-adventure-1194427-1280x0.jpeg'
-                );
-              }}
+              onClick={Stand}
             >
               Stand
             </button>
@@ -154,10 +164,6 @@ function App() {
       </div>
       <div className="center">
         <h1>Player: {playerScore}</h1>
-      </div>
-
-      <div className="center">
-        <img src={stand} />
       </div>
     </div>
   );
