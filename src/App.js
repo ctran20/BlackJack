@@ -1,15 +1,25 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Card from './components/Card/Card';
 import CardList from './components/Card/CardList';
-import { Suits, Ranks, RanksValues, Layouts } from './constants/CardInfo';
+import {
+  Suits,
+  Ranks,
+  RanksValues,
+  Layouts,
+  WIN,
+  LOSE,
+  GAME,
+  MENU,
+} from './constants/CardInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { hit } from './actions/card';
 import 'tachyons';
 import './App.css';
 
 function App() {
-  const [gameState, setGameState] = useState('MENU');
+  const [gameState, setGameState] = useState(MENU);
   const [playerCards, setPlayerCards] = useState([]);
+  const [title, setTitle] = useState('Black Jack');
 
   const [player, setPlayer] = useState({
     rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
@@ -43,10 +53,15 @@ function App() {
 
     setPlayerScore(playerScore + RanksValues[newCards.rank]);
     setPlayerCards(updatedCards);
+
+    if (playerScore + RanksValues[newCards.rank] > 21) {
+      setTitle('Bust!');
+      setGameState(LOSE);
+    }
   };
 
   const StartGame = () => {
-    setGameState('GAME');
+    setGameState(GAME);
     setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
     setDealerScore(RanksValues[dealer.rank2] + RanksValues[dealer.rank2]);
   };
@@ -57,33 +72,33 @@ function App() {
         <Card
           rank={dealer.rank1}
           deck={dealer.suit1}
-          side={gameState === 'MENU' ? false : true}
+          side={gameState === MENU ? false : true}
         />
         <Card
           rank={dealer.rank2}
           deck={dealer.suit2}
-          side={gameState === 'MENU' ? false : true}
+          side={gameState === MENU ? false : true}
         />
       </div>
       <div className="center">
-        <h1>BlackJack</h1>
+        <h1>{title}</h1>
       </div>
       <div className="center ma3">
         <Card
           rank={player.rank1}
           deck={player.suit1}
-          side={gameState === 'MENU' ? false : true}
+          side={gameState === MENU ? false : true}
         />
         <Card
           rank={player.rank2}
           deck={player.suit2}
-          side={gameState === 'MENU' ? false : true}
+          side={gameState === MENU ? false : true}
         />
         <CardList cards={playerCards} />
       </div>
 
       <div className="center">
-        {gameState === 'MENU' ? (
+        {gameState === MENU ? (
           <button
             style={{ width: 150 }}
             className="pa3 ma3 ba bg-yellow grow"

@@ -1,3 +1,9 @@
+export const MENU = 'MENU';
+export const WIN = 'WIN';
+export const LOSE = 'LOSE';
+export const BUST = 'BUST';
+export const GAME = 'GAME';
+
 export const Suits = ['♠', '♥', '♦', '♣'];
 
 export const Ranks = [
