@@ -5,12 +5,10 @@ import {
   Suits,
   Ranks,
   RanksValues,
-  Layouts,
-  WIN,
-  LOSE,
   GAME,
   MENU,
   STAND,
+  POST,
 } from './constants/CardInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { hit } from './actions/card';
@@ -60,7 +58,7 @@ function App() {
 
     if (playerScore + RanksValues[newCards.rank] > 21) {
       setTitle('Bust!');
-      setGameState(LOSE);
+      setGameState(POST);
     }
   };
 
@@ -76,22 +74,28 @@ function App() {
 
     if (dealerScore + RanksValues[newCards.rank] > 21) {
       setTitle('You Win!');
-      setGameState(WIN);
+    } else {
+      if (playerScore < dealerScore) {
+        setTitle('You Lose!');
+      } else {
+        setTitle('You Win!');
+      }
     }
+    setGameState(POST);
   };
 
   const Stand = () => {
+    setGameState(STAND);
+    if (playerScore < dealerScore) {
+      setTitle('You Lose!');
+      setGameState(POST);
+    }
+
     setTimeout(() => {
-      setGameState(STAND);
-      while (gameState === STAND) {
-        if (playerScore < dealerScore) {
-          setTitle('You Lose!');
-          setGameState(LOSE);
-        } else {
-          DealerHit();
-        }
+      if (playerScore >= dealerScore) {
+        DealerHit();
       }
-    }, 500);
+    }, 1200);
   };
 
   const Reset = () => {
@@ -111,7 +115,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="ma3">
       <div className="center ma3">
         <Card
           rank={dealer.rank1}
@@ -161,14 +165,6 @@ function App() {
               onClick={Stand}
             >
               Stand
-            </button>
-            <button
-              style={{ width: 150 }}
-              className="pa3 ma3 ba bg-yellow grow"
-              type="submit"
-              onClick={DealerHit}
-            >
-              Dealer Hit
             </button>
           </div>
         ) : (
