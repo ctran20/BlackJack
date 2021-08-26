@@ -38,12 +38,10 @@ function App() {
   ];
 
   const [player, setPlayer] = useState(starterCard[0]);
-
   const [dealer, setDealer] = useState(starterCard[1]);
 
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
-  const [stand, setStand] = useState('');
 
   // useEffect(() => {
   //   setPlayerScore(playerScore + RanksValues[playerCards[-1].rank]);
@@ -83,12 +81,17 @@ function App() {
   };
 
   const Stand = () => {
-    setGameState(STAND);
-    if (playerScore > dealerScore) {
-      setTitle('You Win!');
-    } else {
-      setTitle('You Lose!');
-    }
+    setTimeout(() => {
+      setGameState(STAND);
+      while (gameState === STAND) {
+        if (playerScore < dealerScore) {
+          setTitle('You Lose!');
+          setGameState(LOSE);
+        } else {
+          DealerHit();
+        }
+      }
+    }, 500);
   };
 
   const Reset = () => {
@@ -118,7 +121,7 @@ function App() {
         <Card
           rank={dealer.rank2}
           deck={dealer.suit2}
-          side={gameState === STAND ? true : false}
+          side={gameState === MENU || gameState === GAME ? false : true}
         />
         <CardList cards={dealerCards} />
       </div>
