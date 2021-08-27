@@ -19,7 +19,7 @@ function App() {
   const [gameState, setGameState] = useState(MENU);
   const [playerCards, setPlayerCards] = useState([]);
   const [dealerCards, setDealerCards] = useState([]);
-  const [title, setTitle] = useState('Black Jack');
+  const [title, setTitle] = useState('BlackJack');
   const starterCard = [
     {
       rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
@@ -105,7 +105,7 @@ function App() {
     setDealerScore(0);
     setPlayerCards([]);
     setDealerCards([]);
-    setTitle('Black Jack');
+    setTitle('BlackJack');
   };
 
   const StartGame = () => {
@@ -115,7 +115,7 @@ function App() {
   };
 
   return (
-    <div className="ma3">
+    <div className="ma4">
       <div className="center ma3">
         <Card
           rank={dealer.rank1}
@@ -130,7 +130,7 @@ function App() {
         <CardList cards={dealerCards} />
       </div>
       <div className="center">
-        <h1>{title}</h1>
+        <h1 class="f1 lh-title">{title}</h1>
       </div>
       <div className="center ma3">
         <Card
@@ -151,7 +151,7 @@ function App() {
           <div>
             <button
               style={{ width: 150 }}
-              className="pa3 ma3 ba bg-yellow grow"
+              className="pa3 ma4 ba bg-yellow grow"
               type="submit"
               onClick={Hit}
             >
@@ -160,7 +160,7 @@ function App() {
 
             <button
               style={{ width: 150 }}
-              className="pa3 ma3 ba bg-yellow grow"
+              className="pa3 ma4 ba bg-yellow grow"
               type="submit"
               onClick={Stand}
             >
@@ -170,7 +170,7 @@ function App() {
         ) : (
           <button
             style={{ width: 150 }}
-            className="pa3 ma3 ba bg-yellow grow"
+            className="pa3 ma4 ba bg-yellow grow"
             type="submit"
             onClick={
               gameState === MENU
@@ -185,12 +185,12 @@ function App() {
           </button>
         )}
       </div>
-      <div className="center">
+      {/* <div className="center">
         <h1>Dealer: {dealerScore}</h1>
       </div>
       <div className="center">
         <h1>Player: {playerScore}</h1>
-      </div>
+      </div> */}
     </div>
   );
 }
