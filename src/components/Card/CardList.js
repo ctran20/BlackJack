@@ -1,14 +1,28 @@
 import React from 'react';
 import Card from './Card';
+import { GAME, MENU } from '../../constants/CardInfo';
 
-const CardList = (props) => {
-  const { cards } = props;
+const CardList = ({ cards, gameState, dealer }) => {
+  const checkSide = (i) => {
+    if (i === 1 && dealer && gameState === GAME) {
+      return false;
+    } else if (i < 2 && gameState === MENU) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   const cardComponent = cards.map((user, i) => {
     return (
-      <Card key={i} rank={cards[i].rank} deck={cards[i].suit} side={true} />
+      <Card
+        key={i}
+        rank={cards[i].rank}
+        deck={cards[i].suit}
+        side={!!checkSide(i)}
+      />
     );
   });
-  return <div>{cardComponent}</div>;
+  return <div className="center">{cardComponent}</div>;
 };
 
 export default CardList;

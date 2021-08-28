@@ -138,24 +138,12 @@ function App() {
 
   return (
     <div className="ma4">
-      <StarterCard
-        rank1={dealerCards[0].rank}
-        suit1={dealerCards[0].suit}
-        rank2={dealerCards[1].rank}
-        suit2={dealerCards[1].suit}
-        hitCards={dealerCards.splice(0, 2)}
-        gameState={gameState}
-        dealer={true}
-      />
+      <StarterCard cardList={dealerCards} gameState={gameState} dealer={true} />
       <div className="center">
         <h1 class="f2 lh-title">{title}</h1>
       </div>
       <StarterCard
-        rank1={playerCards[0].rank}
-        suit1={playerCards[0].suit}
-        rank2={playerCards[1].rank}
-        suit2={playerCards[1].suit}
-        hitCards={playerCards.splice(0, 2)}
+        cardList={playerCards}
         gameState={gameState}
         dealer={false}
       />
