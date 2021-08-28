@@ -22,7 +22,7 @@ export const Ranks = [
 ];
 
 export const RanksValues = {
-  A: 1,
+  1: 1,
   2: 2,
   3: 3,
   4: 4,
@@ -32,6 +32,7 @@ export const RanksValues = {
   8: 8,
   9: 9,
   10: 10,
+  A: 10,
   J: 10,
   Q: 10,
   K: 10,

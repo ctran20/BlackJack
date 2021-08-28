@@ -60,6 +60,12 @@ function App() {
     }
   };
 
+  const CountCard = (cards) => {
+    let score = 0;
+    for (let i = 0; i < cards.length; i++) {}
+    return score;
+  };
+
   const DealerHit = () => {
     const newCards = {
       rank: Ranks[Math.floor(Math.random() * Ranks.length)],
@@ -113,6 +119,13 @@ function App() {
 
   const StartGame = () => {
     setGameState(GAME);
+    if (
+      (player.rank1 === 'A' && RanksValues[player.rank2] === 10) ||
+      (player.rank2 === 'A' && RanksValues[player.rank1] === 10)
+    ) {
+      setTitle('Blackjack! You Win!');
+      setGameState(POST);
+    }
     setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
     setDealerScore(RanksValues[dealer.rank1] + RanksValues[dealer.rank2]);
   };
@@ -129,7 +142,7 @@ function App() {
         dealer={true}
       />
       <div className="center">
-        <h1 class="f1 lh-title">{title}</h1>
+        <h1 class="f2 lh-title">{title}</h1>
       </div>
       <StarterCard
         rank1={player.rank1}
