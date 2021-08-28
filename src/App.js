@@ -71,7 +71,7 @@ function App() {
       rank: Ranks[Math.floor(Math.random() * Ranks.length)],
       suit: Suits[Math.floor(Math.random() * Suits.length)],
     };
-    const updatedCards = dealerCards.concat(newCards);
+    const updatedCards = dealerHitCards.concat(newCards);
 
     setDealerHitScore(dealerHitScore + RanksValues[newCards.rank]);
     setDealerHitCards(updatedCards);
@@ -81,16 +81,18 @@ function App() {
     setDealerCards(dealerHitCards);
     if (dealerScore + dealerHitScore > 21) {
       setTitle('You Win!');
-      setDealerScore(dealerScore + dealerHitScore);
+      setGameState(POST);
+      return;
+    }
+    if (dealerScore + dealerHitScore === playerScore) {
+      setTitle('You Tie!');
       setGameState(POST);
       return;
     }
     if (playerScore < dealerScore + dealerHitScore) {
       setTitle('You Lose!');
-      setDealerScore(dealerScore + dealerHitScore);
       setGameState(POST);
     } else {
-      setDealerScore(dealerScore + dealerHitScore);
       DealerHit();
     }
   };
@@ -165,7 +167,7 @@ function App() {
         />
       </div>
       <div className="center">
-        <h1>Dealer: {dealerScore}</h1>
+        <h1>Dealer: {dealerScore + dealerHitScore}</h1>
       </div>
       <div className="center">
         <h1>Player: {playerScore}</h1>
