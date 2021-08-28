@@ -7,6 +7,8 @@ import {
   Suits,
   Ranks,
   RanksValues,
+  Dealer,
+  Player,
   GAME,
   MENU,
   STAND,
@@ -19,26 +21,9 @@ import './App.css';
 
 function App() {
   const [gameState, setGameState] = useState(MENU);
-  const [playerCards, setPlayerCards] = useState([]);
-  const [dealerCards, setDealerCards] = useState([]);
+  const [playerCards, setPlayerCards] = useState(Player);
+  const [dealerCards, setDealerCards] = useState(Dealer);
   const [title, setTitle] = useState('BlackJack');
-  const starterCard = [
-    {
-      rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-      rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-      suit1: Suits[Math.floor(Math.random() * Suits.length)],
-      suit2: Suits[Math.floor(Math.random() * Suits.length)],
-    },
-    {
-      rank1: Ranks[Math.floor(Math.random() * Ranks.length)],
-      rank2: Ranks[Math.floor(Math.random() * Ranks.length)],
-      suit1: Suits[Math.floor(Math.random() * Suits.length)],
-      suit2: Suits[Math.floor(Math.random() * Suits.length)],
-    },
-  ];
-
-  const [player, setPlayer] = useState(starterCard[0]);
-  const [dealer, setDealer] = useState(starterCard[1]);
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [dealerHitScore, setDealerHitScore] = useState(0);
@@ -51,7 +36,7 @@ function App() {
     };
     const updatedCards = playerCards.concat(newCards);
 
-    setPlayerScore(playerScore + RanksValues[newCards.rank]);
+    setPlayerScore(CountCard(updatedCards));
     setPlayerCards(updatedCards);
 
     if (playerScore + RanksValues[newCards.rank] > 21) {
@@ -62,7 +47,23 @@ function App() {
 
   const CountCard = (cards) => {
     let score = 0;
-    for (let i = 0; i < cards.length; i++) {}
+    let allAs = 0;
+    for (let x in cards) {
+      if (cards[x].rank === 'A') {
+        allAs++;
+      } else {
+        score += RanksValues[cards[x].rank];
+      }
+    }
+
+    for (let i = 0; i < allAs; i++) {
+      if (score < 21) {
+        score += RanksValues['1'];
+      } else {
+        score += RanksValues['A'];
+      }
+    }
+
     return score;
   };
 
@@ -108,13 +109,11 @@ function App() {
   };
 
   const Reset = () => {
-    setPlayer(starterCard[0]);
-    setDealer(starterCard[1]);
+    setPlayerCards(Player);
+    setDealerCards(Dealer);
     setPlayerScore(0);
     setDealerScore(0);
     setDealerHitScore(0);
-    setPlayerCards([]);
-    setDealerCards([]);
     setDealerHitCards([]);
     setTitle('BlackJack');
   };
@@ -122,24 +121,29 @@ function App() {
   const StartGame = () => {
     setGameState(GAME);
     if (
-      (player.rank1 === 'A' && RanksValues[player.rank2] === 10) ||
-      (player.rank2 === 'A' && RanksValues[player.rank1] === 10)
+      (playerCards[0].rank === 'A' &&
+        RanksValues[playerCards[1].rank] === 10) ||
+      (playerCards[1].rank === 'A' && RanksValues[playerCards[0].rank] === 10)
     ) {
       setTitle('Blackjack! You Win!');
       setGameState(POST);
     }
-    setPlayerScore(RanksValues[player.rank1] + RanksValues[player.rank2]);
-    setDealerScore(RanksValues[dealer.rank1] + RanksValues[dealer.rank2]);
+    setPlayerScore(
+      RanksValues[playerCards[0].rank] + RanksValues[playerCards[1].rank]
+    );
+    setDealerScore(
+      RanksValues[dealerCards[0].rank] + RanksValues[dealerCards[1].rank]
+    );
   };
 
   return (
     <div className="ma4">
       <StarterCard
-        rank1={dealer.rank1}
-        suit1={dealer.suit1}
-        rank2={dealer.rank2}
-        suit2={dealer.suit2}
-        hitCards={dealerCards}
+        rank1={dealerCards[0].rank}
+        suit1={dealerCards[0].suit}
+        rank2={dealerCards[1].rank}
+        suit2={dealerCards[1].suit}
+        hitCards={dealerCards.splice(0, 2)}
         gameState={gameState}
         dealer={true}
       />
@@ -147,11 +151,11 @@ function App() {
         <h1 class="f2 lh-title">{title}</h1>
       </div>
       <StarterCard
-        rank1={player.rank1}
-        suit1={player.suit1}
-        rank2={player.rank2}
-        suit2={player.suit2}
-        hitCards={playerCards}
+        rank1={playerCards[0].rank}
+        suit1={playerCards[0].suit}
+        rank2={playerCards[1].rank}
+        suit2={playerCards[1].suit}
+        hitCards={playerCards.splice(0, 2)}
         gameState={gameState}
         dealer={false}
       />
