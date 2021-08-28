@@ -1,7 +1,6 @@
 import React from 'react';
-import './Button.css';
 
-const styledButton = ({ func, label }) => {
+const StyledButton = ({ func, label }) => {
   return (
     <button
       style={{ width: 150, borderRadius: 10 }}
@@ -14,4 +13,4 @@ const styledButton = ({ func, label }) => {
   );
 };
 
-export default styledButton;
+export default StyledButton;

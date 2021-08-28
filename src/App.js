@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Card from './components/Card/Card';
+import Buttons from './components/Buttons/Buttons';
 import CardList from './components/Card/CardList';
+import StarterCard from './components/Card/StarterCard';
 import {
   Suits,
   Ranks,
@@ -37,14 +39,10 @@ function App() {
 
   const [player, setPlayer] = useState(starterCard[0]);
   const [dealer, setDealer] = useState(starterCard[1]);
-
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
-
-  // useEffect(() => {
-  //   setPlayerScore(playerScore + RanksValues[playerCards[-1].rank]);
-  //   console.log(playerScore);
-  // }, [playerCards]);
+  const [dealerHitScore, setDealerHitScore] = useState(0);
+  const [dealerHitCards, setDealerHitCards] = useState([]);
 
   const Hit = () => {
     const newCards = {
@@ -69,19 +67,26 @@ function App() {
     };
     const updatedCards = dealerCards.concat(newCards);
 
-    setDealerScore(dealerScore + RanksValues[newCards.rank]);
-    setDealerCards(updatedCards);
+    setDealerHitScore(dealerHitScore + RanksValues[newCards.rank]);
+    setDealerHitCards(updatedCards);
+  };
 
-    if (dealerScore + RanksValues[newCards.rank] > 21) {
+  const Result = () => {
+    setDealerCards(dealerHitCards);
+    if (dealerScore + dealerHitScore > 21) {
       setTitle('You Win!');
-    } else {
-      if (playerScore < dealerScore) {
-        setTitle('You Lose!');
-      } else {
-        setTitle('You Win!');
-      }
+      setDealerScore(dealerScore + dealerHitScore);
+      setGameState(POST);
+      return;
     }
-    setGameState(POST);
+    if (playerScore < dealerScore + dealerHitScore) {
+      setTitle('You Lose!');
+      setDealerScore(dealerScore + dealerHitScore);
+      setGameState(POST);
+    } else {
+      setDealerScore(dealerScore + dealerHitScore);
+      DealerHit();
+    }
   };
 
   const Stand = () => {
@@ -89,13 +94,9 @@ function App() {
     if (playerScore < dealerScore) {
       setTitle('You Lose!');
       setGameState(POST);
+    } else {
+      DealerHit();
     }
-
-    setTimeout(() => {
-      if (playerScore >= dealerScore) {
-        DealerHit();
-      }
-    }, 1200);
   };
 
   const Reset = () => {
@@ -103,8 +104,10 @@ function App() {
     setDealer(starterCard[1]);
     setPlayerScore(0);
     setDealerScore(0);
+    setDealerHitScore(0);
     setPlayerCards([]);
     setDealerCards([]);
+    setDealerHitCards([]);
     setTitle('BlackJack');
   };
 
@@ -116,81 +119,44 @@ function App() {
 
   return (
     <div className="ma4">
-      <div className="center ma3">
-        <Card
-          rank={dealer.rank1}
-          deck={dealer.suit1}
-          side={gameState === MENU ? false : true}
-        />
-        <Card
-          rank={dealer.rank2}
-          deck={dealer.suit2}
-          side={gameState === MENU || gameState === GAME ? false : true}
-        />
-        <CardList cards={dealerCards} />
-      </div>
+      <StarterCard
+        rank1={dealer.rank1}
+        suit1={dealer.suit1}
+        rank2={dealer.rank2}
+        suit2={dealer.suit2}
+        hitCards={dealerCards}
+        gameState={gameState}
+        dealer={true}
+      />
       <div className="center">
         <h1 class="f1 lh-title">{title}</h1>
       </div>
-      <div className="center ma3">
-        <Card
-          rank={player.rank1}
-          deck={player.suit1}
-          side={gameState === MENU ? false : true}
-        />
-        <Card
-          rank={player.rank2}
-          deck={player.suit2}
-          side={gameState === MENU ? false : true}
-        />
-        <CardList cards={playerCards} />
-      </div>
-
+      <StarterCard
+        rank1={player.rank1}
+        suit1={player.suit1}
+        rank2={player.rank2}
+        suit2={player.suit2}
+        hitCards={playerCards}
+        gameState={gameState}
+        dealer={false}
+      />
       <div className="center">
-        {gameState === GAME ? (
-          <div>
-            <button
-              style={{ width: 150 }}
-              className="pa3 ma4 ba bg-yellow grow"
-              type="submit"
-              onClick={Hit}
-            >
-              Hit
-            </button>
-
-            <button
-              style={{ width: 150 }}
-              className="pa3 ma4 ba bg-yellow grow"
-              type="submit"
-              onClick={Stand}
-            >
-              Stand
-            </button>
-          </div>
-        ) : (
-          <button
-            style={{ width: 150 }}
-            className="pa3 ma4 ba bg-yellow grow"
-            type="submit"
-            onClick={
-              gameState === MENU
-                ? StartGame
-                : () => {
-                    setGameState(MENU);
-                    Reset();
-                  }
-            }
-          >
-            {gameState === MENU ? 'Start' : 'Menu'}
-          </button>
-        )}
+        <Buttons
+          Hit={Hit}
+          Stand={Stand}
+          gameState={gameState}
+          setGameState={setGameState}
+          StartGame={StartGame}
+          Reset={Reset}
+          Result={Result}
+        />
       </div>
-      {/* <div className="center">
+      <div className="center">
         <h1>Dealer: {dealerScore}</h1>
       </div>
       <div className="center">
         <h1>Player: {playerScore}</h1>
-      </div> */}
+      </div>
     </div>
   );
 }

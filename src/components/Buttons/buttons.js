@@ -1,34 +1,51 @@
 import React from 'react';
-import styledButton from './styledButton';
-import './Button.css';
+import StyledButton from './StyledButton';
+import { GAME, MENU, STAND, POST } from '../../constants/CardInfo';
 
-const Button = ({ Hit, Stand, gameState, setGameState }) => {
-  return (
-    <div className="center">
-      {gameState === GAME ? (
+const Buttons = ({
+  Hit,
+  Stand,
+  StartGame,
+  gameState,
+  setGameState,
+  Reset,
+  Result,
+}) => {
+  switch (gameState) {
+    case GAME:
+      return (
         <div>
-          <styledButton func={Hit} label="Hit" />
-          <styledButton func={Stand} label="Hit" />
+          <StyledButton func={Hit} label="Hit" />
+          <StyledButton func={Stand} label="Stand" />
         </div>
-      ) : (
-        <button
-          style={{ width: 150 }}
-          className="pa3 ma4 ba bg-yellow grow"
-          type="submit"
-          onClick={
-            gameState === MENU
-              ? StartGame
-              : () => {
-                  setGameState(MENU);
-                  Reset();
-                }
-          }
-        >
-          {gameState === MENU ? 'Start' : 'Menu'}
-        </button>
-      )}
-    </div>
-  );
+      );
+    case MENU:
+      return (
+        <div>
+          <StyledButton func={StartGame} label="Start" />
+        </div>
+      );
+    case STAND:
+      return (
+        <div>
+          <StyledButton func={Result} label="Next" />
+        </div>
+      );
+    case POST:
+      return (
+        <div>
+          <StyledButton
+            func={() => {
+              Reset();
+              setGameState(MENU);
+            }}
+            label="Menu"
+          />
+        </div>
+      );
+    default:
+      return <div>{`Error! In ${gameState}`}</div>;
+  }
 };
 
-export default Button;
+export default Buttons;
