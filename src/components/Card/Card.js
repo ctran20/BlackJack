@@ -5,8 +5,8 @@ const Card = (props) => {
   const { rank, deck, side } = props;
   return (
     <div
-      className="bg-white dib br4 ba b--black ma1 grow f1 flex-column"
-      style={{ width: 200, height: 280 }}
+      className="bg-white dib br4 ba b--black ma1 grow shadow-5 f1 flex-column"
+      style={{ width: 170, height: 250 }}
     >
       {side ? (
         <div

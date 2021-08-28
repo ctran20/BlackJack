@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import Card from './components/Card/Card';
+import logo from './imgs/logo.png';
 import Buttons from './components/Buttons/Buttons';
-import CardList from './components/Card/CardList';
 import StarterCard from './components/Card/StarterCard';
 import {
   Suits,
@@ -137,10 +136,13 @@ function App() {
   };
 
   return (
-    <div className="ma4">
+    <div>
+      <div className="center">
+        <img style={{ width: 400 }} alt="logo" src={logo} />
+      </div>
       <StarterCard cardList={dealerCards} gameState={gameState} dealer={true} />
       <div className="center">
-        <h1 class="f2 lh-title">{title}</h1>
+        <h1>{title}</h1>
       </div>
       <StarterCard
         cardList={playerCards}
