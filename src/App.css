@@ -5,4 +5,16 @@
 
 button {
   border-radius: 10px;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.05s ease-out;
+}
+
+button:focus {
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.9);
 }

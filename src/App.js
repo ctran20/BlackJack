@@ -6,27 +6,41 @@ import {
   Suits,
   Ranks,
   RanksValues,
-  Dealer,
-  Player,
   GAME,
   MENU,
   STAND,
   POST,
 } from './constants/CardInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import { hit } from './actions/card';
 import 'tachyons';
 import './App.css';
 
 function App() {
+  const Dealer = [
+    {
+      rank: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+    {
+      rank: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+  ];
+  const Player = [
+    {
+      rank: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+    {
+      rank: Ranks[Math.floor(Math.random() * Ranks.length)],
+      suit: Suits[Math.floor(Math.random() * Suits.length)],
+    },
+  ];
   const [gameState, setGameState] = useState(MENU);
   const [playerCards, setPlayerCards] = useState(Player);
   const [dealerCards, setDealerCards] = useState(Dealer);
-  const [title, setTitle] = useState('BlackJack');
+  const [title, setTitle] = useState('');
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
-  const [dealerHitScore, setDealerHitScore] = useState(0);
-  const [dealerHitCards, setDealerHitCards] = useState([]);
 
   const Hit = () => {
     const newCards = {
@@ -34,11 +48,12 @@ function App() {
       suit: Suits[Math.floor(Math.random() * Suits.length)],
     };
     const updatedCards = playerCards.concat(newCards);
+    let score = CountCard(updatedCards);
 
-    setPlayerScore(CountCard(updatedCards));
+    setPlayerScore(score);
     setPlayerCards(updatedCards);
 
-    if (playerScore + RanksValues[newCards.rank] > 21) {
+    if (score > 21) {
       setTitle('Bust!');
       setGameState(POST);
     }
@@ -50,16 +65,13 @@ function App() {
     for (let x in cards) {
       if (cards[x].rank === 'A') {
         allAs++;
-      } else {
-        score += RanksValues[cards[x].rank];
       }
+      score += RanksValues[cards[x].rank];
     }
 
     for (let i = 0; i < allAs; i++) {
-      if (score < 21) {
-        score += RanksValues['1'];
-      } else {
-        score += RanksValues['A'];
+      if (score > 21) {
+        score -= 9;
       }
     }
 
@@ -71,29 +83,25 @@ function App() {
       rank: Ranks[Math.floor(Math.random() * Ranks.length)],
       suit: Suits[Math.floor(Math.random() * Suits.length)],
     };
-    const updatedCards = dealerHitCards.concat(newCards);
+    const updatedCards = dealerCards.concat(newCards);
+    let score = CountCard(updatedCards);
 
-    setDealerHitScore(dealerHitScore + RanksValues[newCards.rank]);
-    setDealerHitCards(updatedCards);
-  };
+    setDealerScore(score);
+    setDealerCards(updatedCards);
 
-  const Result = () => {
-    setDealerCards(dealerHitCards);
-    if (dealerScore + dealerHitScore > 21) {
+    if (score > 21) {
       setTitle('You Win!');
       setGameState(POST);
       return;
     }
-    if (dealerScore + dealerHitScore === playerScore) {
+    if (score === playerScore) {
       setTitle('You Tie!');
       setGameState(POST);
       return;
     }
-    if (playerScore < dealerScore + dealerHitScore) {
+    if (playerScore < score) {
       setTitle('You Lose!');
       setGameState(POST);
-    } else {
-      DealerHit();
     }
   };
 
@@ -102,8 +110,6 @@ function App() {
     if (playerScore < dealerScore) {
       setTitle('You Lose!');
       setGameState(POST);
-    } else {
-      DealerHit();
     }
   };
 
@@ -112,9 +118,7 @@ function App() {
     setDealerCards(Dealer);
     setPlayerScore(0);
     setDealerScore(0);
-    setDealerHitScore(0);
-    setDealerHitCards([]);
-    setTitle('BlackJack');
+    setTitle('');
   };
 
   const StartGame = () => {
@@ -124,7 +128,7 @@ function App() {
         RanksValues[playerCards[1].rank] === 10) ||
       (playerCards[1].rank === 'A' && RanksValues[playerCards[0].rank] === 10)
     ) {
-      setTitle('Blackjack! You Win!');
+      setTitle('Blackjack!');
       setGameState(POST);
     }
     setPlayerScore(
@@ -157,15 +161,15 @@ function App() {
           setGameState={setGameState}
           StartGame={StartGame}
           Reset={Reset}
-          Result={Result}
+          Result={DealerHit}
         />
       </div>
-      <div className="center">
-        <h1>Dealer: {dealerScore + dealerHitScore}</h1>
+      {/* <div className="center">
+        <h1>Dealer: {dealerScore}</h1>
       </div>
       <div className="center">
         <h1>Player: {playerScore}</h1>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -38,25 +38,4 @@ export const RanksValues = {
   K: 10,
 };
 
-export const Dealer = [
-  {
-    rank: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit: Suits[Math.floor(Math.random() * Suits.length)],
-  },
-  {
-    rank: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit: Suits[Math.floor(Math.random() * Suits.length)],
-  },
-];
-export const Player = [
-  {
-    rank: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit: Suits[Math.floor(Math.random() * Suits.length)],
-  },
-  {
-    rank: Ranks[Math.floor(Math.random() * Ranks.length)],
-    suit: Suits[Math.floor(Math.random() * Suits.length)],
-  },
-];
-
 export const Layouts = {};
