@@ -1,12 +1,12 @@
 import React from 'react';
 import Card from './Card';
-import { GAME, MENU } from '../../constants/CardInfo';
+import { GAME, MENU, BET } from '../../constants/CardInfo';
 
 const CardList = ({ cards, gameState, dealer }) => {
   const checkSide = (i) => {
     if (i === 1 && dealer && gameState === GAME) {
       return false;
-    } else if (i < 2 && gameState === MENU) {
+    } else if (i < 2 && (gameState === MENU || gameState === BET)) {
       return false;
     } else {
       return true;

@@ -1,6 +1,6 @@
 import React from 'react';
 import StyledButton from './StyledButton';
-import { GAME, MENU, STAND, POST } from '../../constants/CardInfo';
+import { GAME, MENU, STAND, POST, BET } from '../../constants/CardInfo';
 
 const Buttons = ({
   Hit,
@@ -10,6 +10,8 @@ const Buttons = ({
   setGameState,
   Reset,
   Result,
+  Bet,
+  addChip,
 }) => {
   switch (gameState) {
     case GAME:
@@ -19,10 +21,16 @@ const Buttons = ({
           <StyledButton func={Stand} label="Stand" />
         </div>
       );
-    case MENU:
+    case BET:
       return (
         <div>
           <StyledButton func={StartGame} label="Start" />
+        </div>
+      );
+    case MENU:
+      return (
+        <div>
+          <StyledButton func={Bet} label="Start Game" />
         </div>
       );
     case STAND:
