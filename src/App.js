@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import logo from './imgs/logo.png';
+import ten from './imgs/ten.png';
+import quart from './imgs/quart.png';
+import half from './imgs/half.png';
+import hundred from './imgs/hundred.png';
 import Buttons from './components/Buttons/Buttons';
 import StarterCard from './components/Card/StarterCard';
 import {
@@ -181,12 +185,49 @@ function App() {
         <div
           style={{
             width: 220,
+            height: '50%',
             borderRadius: 5,
           }}
           className="pa3 ba b--black bg-yellow"
         >
           <h1>{`Total: $${total}`}</h1>
         </div>
+        <img
+          style={{ width: 150 }}
+          className="ma2 pointer"
+          alt="ten"
+          src={ten}
+          onClick={() => {
+            setTitle('Sup');
+          }}
+        />
+        <img
+          style={{ width: 150 }}
+          className="ma2 pointer"
+          alt="quart"
+          src={quart}
+          onClick={() => {
+            setTitle('Sup');
+          }}
+        />
+        <img
+          style={{ width: 150 }}
+          className="ma2 pointer"
+          alt="half"
+          src={half}
+          onClick={() => {
+            setTitle('Sup');
+          }}
+        />
+        <img
+          style={{ width: 150 }}
+          className="ma2 pointer"
+          alt="hundred"
+          src={hundred}
+          onClick={() => {
+            setTitle('Sup');
+          }}
+        />
       </div>
       {/* <div className="center">
         <h1>Dealer: {dealerScore}</h1>
