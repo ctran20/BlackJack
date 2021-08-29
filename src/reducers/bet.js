@@ -16,6 +16,11 @@ export const setChips = (state = initialState, action = {}) => {
       return Object.assign({}, state, {
         bet: 0,
       });
+    case TAKE_CHIP:
+      return Object.assign({}, state, {
+        total: state.total + action.payload,
+        bet: 0,
+      });
     default:
       return state;
   }

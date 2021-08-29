@@ -7,6 +7,11 @@ export const addChip = (amount) => ({
   payload: amount,
 });
 
+export const takeChip = (amount) => ({
+  type: TAKE_CHIP,
+  payload: amount,
+});
+
 export const betChip = () => ({
   type: BET_CHIP,
 });

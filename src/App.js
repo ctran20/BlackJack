@@ -22,7 +22,7 @@ import Chip from './components/Buttons/Chip';
 import 'tachyons';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChip, betChip } from './actions/bet';
+import { addChip, betChip, takeChip } from './actions/bet';
 
 function App() {
   const Dealer = [
@@ -103,23 +103,24 @@ function App() {
 
     if (score > 21) {
       setTitle('You Win!');
+      dispatch(takeChip(bet * 2));
       setGameState(POST);
       return;
     }
     if (score === playerScore) {
-      setTitle('You Tie!');
+      setTitle('Tie!');
+      dispatch(takeChip(bet));
       setGameState(POST);
       return;
     }
     if (playerScore < score) {
-      setTitle('You Lose!');
+      setTitle('Dealer Win!');
       setGameState(POST);
     }
   };
 
   const Stand = () => {
     setGameState(STAND);
-
     if (playerScore < dealerScore) {
       setTitle('You Lose!');
       setGameState(POST);
@@ -131,6 +132,7 @@ function App() {
     setDealerCards(Dealer);
     setPlayerScore(0);
     setDealerScore(0);
+    dispatch(betChip());
     setTitle('');
   };
 
@@ -145,13 +147,13 @@ function App() {
   };
 
   const StartGame = () => {
-    dispatch(betChip());
     setGameState(GAME);
     if (
       (playerCards[0].rank === 'A' &&
         RanksValues[playerCards[1].rank] === 10) ||
       (playerCards[1].rank === 'A' && RanksValues[playerCards[0].rank] === 10)
     ) {
+      dispatch(takeChip(bet * 2));
       setTitle('Blackjack!');
       setGameState(POST);
     }
