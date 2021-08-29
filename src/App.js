@@ -164,6 +164,17 @@ function App() {
           Result={DealerHit}
         />
       </div>
+      <div className="bank br1">
+        <Buttons
+          Hit={Hit}
+          Stand={Stand}
+          gameState={gameState}
+          setGameState={setGameState}
+          StartGame={StartGame}
+          Reset={Reset}
+          Result={DealerHit}
+        />
+      </div>
       {/* <div className="center">
         <h1>Dealer: {dealerScore}</h1>
       </div>

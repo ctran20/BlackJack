@@ -3,6 +3,13 @@
   justify-content: center;
 }
 
+.bank {
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
 button {
   border-radius: 10px;
   -moz-osx-font-smoothing: grayscale;
