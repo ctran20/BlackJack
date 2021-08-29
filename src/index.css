@@ -5,7 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, rgb(23, 155, 11), rgb(35, 216, 19));
+
+  background-color: rgb(33, 189, 19);
+  opacity: 1;
+  background-image: radial-gradient(circle at center center, #ffffff, #247c14),
+    repeating-radial-gradient(
+      circle at center center,
+      #ffffff,
+      #ffffff,
+      15px,
+      transparent 30px,
+      transparent 15px
+    );
+  background-blend-mode: multiply;
 }
 
 code {

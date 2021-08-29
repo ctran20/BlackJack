@@ -10,6 +10,7 @@ import {
   MENU,
   STAND,
   POST,
+  BET,
 } from './constants/CardInfo';
 import 'tachyons';
 import './App.css';
@@ -41,6 +42,14 @@ function App() {
   const [title, setTitle] = useState('');
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
+  const [total, setTotal] = useState(250);
+  const [bet, setBet] = useState(150);
+
+  const Bet = () => {
+    setGameState(BET);
+  };
+
+  const addChip = () => {};
 
   const Hit = () => {
     const newCards = {
@@ -107,6 +116,7 @@ function App() {
 
   const Stand = () => {
     setGameState(STAND);
+
     if (playerScore < dealerScore) {
       setTitle('You Lose!');
       setGameState(POST);
@@ -122,6 +132,9 @@ function App() {
   };
 
   const StartGame = () => {
+    setTotal(total - bet);
+    setTitle(`$${bet}`);
+    setBet(0);
     setGameState(GAME);
     if (
       (playerCards[0].rank === 'A' &&
@@ -142,7 +155,7 @@ function App() {
   return (
     <div>
       <div className="center">
-        <img style={{ width: 400 }} alt="logo" src={logo} />
+        <img style={{ width: 300 }} alt="logo" src={logo} />
       </div>
       <StarterCard cardList={dealerCards} gameState={gameState} dealer={true} />
       <div className="center">
@@ -164,16 +177,16 @@ function App() {
           Result={DealerHit}
         />
       </div>
-      <div className="bank br1">
-        <Buttons
-          Hit={Hit}
-          Stand={Stand}
-          gameState={gameState}
-          setGameState={setGameState}
-          StartGame={StartGame}
-          Reset={Reset}
-          Result={DealerHit}
-        />
+      <div className="bank">
+        <div
+          style={{
+            width: 220,
+            borderRadius: 5,
+          }}
+          className="pa3 ba b--black bg-yellow"
+        >
+          <h1>{`Total: $${total}`}</h1>
+        </div>
       </div>
       {/* <div className="center">
         <h1>Dealer: {dealerScore}</h1>
