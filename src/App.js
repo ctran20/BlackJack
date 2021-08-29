@@ -8,6 +8,7 @@ import {
   STAND,
   POST,
   BET,
+  LOSE,
 } from './constants/CardInfo';
 import logo from './imgs/logo.png';
 import ten from './imgs/ten.png';
@@ -170,15 +171,27 @@ function App() {
       <div className="center">
         <img style={{ width: 300 }} alt="logo" src={logo} />
       </div>
-      <StarterCard cardList={dealerCards} gameState={gameState} dealer={true} />
-      <div className="center">
-        <h1>{title}</h1>
-      </div>
-      <StarterCard
-        cardList={playerCards}
-        gameState={gameState}
-        dealer={false}
-      />
+      {gameState === LOSE ? (
+        <div className="center f3">
+          <h1>You've lost it all!</h1>
+        </div>
+      ) : (
+        <div>
+          <StarterCard
+            cardList={dealerCards}
+            gameState={gameState}
+            dealer={true}
+          />
+          <div className="center">
+            <h1>{title}</h1>
+          </div>
+          <StarterCard
+            cardList={playerCards}
+            gameState={gameState}
+            dealer={false}
+          />
+        </div>
+      )}
       <div className="center">
         <Buttons
           Hit={Hit}

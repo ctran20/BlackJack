@@ -3,6 +3,7 @@ export const GAME = 'GAME';
 export const STAND = 'STAND';
 export const POST = 'POST';
 export const BET = 'BET';
+export const LOSE = 'LOSE';
 
 export const Suits = ['♠', '♥', '♦', '♣'];
 

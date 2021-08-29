@@ -1,4 +1,4 @@
-import { Suits, Ranks, RanksValues, Layouts } from '../constants/CardInfo';
+import { Suits, Ranks } from '../constants/CardInfo';
 export const HIT = 'HIT';
 
 // export const Hit = () => {

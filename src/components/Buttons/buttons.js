@@ -1,6 +1,8 @@
 import React from 'react';
 import StyledButton from './StyledButton';
-import { GAME, MENU, STAND, POST, BET } from '../../constants/CardInfo';
+import { GAME, MENU, STAND, POST, BET, LOSE } from '../../constants/CardInfo';
+import { useDispatch, useSelector } from 'react-redux';
+import { takeChip } from '../../actions/bet';
 
 const Buttons = ({
   Hit,
@@ -11,8 +13,9 @@ const Buttons = ({
   Reset,
   Result,
   Bet,
-  addChip,
 }) => {
+  const { total } = useSelector((state) => state.setChips);
+  const dispatch = useDispatch();
   switch (gameState) {
     case GAME:
       return (
@@ -39,13 +42,29 @@ const Buttons = ({
           <StyledButton func={Result} label="Next" />
         </div>
       );
+    case LOSE:
+      return (
+        <div>
+          <StyledButton
+            func={() => {
+              setGameState(MENU);
+              dispatch(takeChip(250));
+            }}
+            label="Restart"
+          />
+        </div>
+      );
     case POST:
       return (
         <div>
           <StyledButton
             func={() => {
+              if (total === 0) {
+                setGameState('LOSE');
+              } else {
+                setGameState(MENU);
+              }
               Reset();
-              setGameState(MENU);
             }}
             label="Menu"
           />
