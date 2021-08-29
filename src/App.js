@@ -1,13 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import logo from './imgs/logo.png';
-import ten from './imgs/ten.png';
-import quart from './imgs/quart.png';
-import half from './imgs/half.png';
-import hundred from './imgs/hundred.png';
-import onek from './imgs/onek.png';
-import Buttons from './components/Buttons/Buttons';
-import StarterCard from './components/Card/StarterCard';
-import Chip from './components/Buttons/Chip';
+import React, { useState } from 'react';
 import {
   Suits,
   Ranks,
@@ -18,8 +9,20 @@ import {
   POST,
   BET,
 } from './constants/CardInfo';
+import logo from './imgs/logo.png';
+import ten from './imgs/ten.png';
+import quart from './imgs/quart.png';
+import half from './imgs/half.png';
+import hundo from './imgs/hundred.png';
+import onek from './imgs/onek.png';
+import Buttons from './components/Buttons/Buttons';
+import StarterCard from './components/Card/StarterCard';
+import Chip from './components/Buttons/Chip';
+
 import 'tachyons';
 import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChip, betChip } from './actions/bet';
 
 function App() {
   const Dealer = [
@@ -48,8 +51,8 @@ function App() {
   const [title, setTitle] = useState('');
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
-  const [total, setTotal] = useState(250);
-  const [bet, setBet] = useState(0);
+  const { total, bet } = useSelector((state) => state.setChips);
+  const dispatch = useDispatch();
 
   const Hit = () => {
     const newCards = {
@@ -136,15 +139,13 @@ function App() {
     setTitle('$0');
   };
 
-  const addChip = (value) => {
-    setBet(value + bet);
+  const pickChip = (value) => {
+    dispatch(addChip(value));
     setTitle(`$${value + bet}`);
-    setTotal(total - bet);
   };
 
   const StartGame = () => {
-    setTotal(total - bet);
-    setBet(0);
+    dispatch(betChip());
     setGameState(GAME);
     if (
       (playerCards[0].rank === 'A' &&
@@ -202,16 +203,11 @@ function App() {
         </div>
         {gameState === BET ? (
           <div>
-            <Chip value={10} total={total} addChip={addChip} imgSrc={ten} />
-            <Chip value={20} total={total} addChip={addChip} imgSrc={quart} />
-            <Chip value={50} total={total} addChip={addChip} imgSrc={half} />
-            <Chip
-              value={100}
-              total={total}
-              addChip={addChip}
-              imgSrc={hundred}
-            />
-            <Chip value={1000} total={total} addChip={addChip} imgSrc={onek} />
+            <Chip value={10} total={total} addChip={pickChip} imgSrc={ten} />
+            <Chip value={20} total={total} addChip={pickChip} imgSrc={quart} />
+            <Chip value={50} total={total} addChip={pickChip} imgSrc={half} />
+            <Chip value={100} total={total} addChip={pickChip} imgSrc={hundo} />
+            <Chip value={1000} total={total} addChip={pickChip} imgSrc={onek} />
           </div>
         ) : (
           <div />

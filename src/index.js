@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { playerChoice } from './reducers/card';
+import { setChips } from './reducers/bet';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const rootReducer = combineReducers({ playerChoice });
+const rootReducer = combineReducers({ setChips });
 const store = createStore(rootReducer);
 
 ReactDOM.render(

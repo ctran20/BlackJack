@@ -1,6 +1,12 @@
-import { ADD_CHIP, TAKE_CHIP } from './constants';
+export const ADD_CHIP = 'ADD_CHIP';
+export const TAKE_CHIP = 'TAKE_CHIP';
+export const BET_CHIP = 'BET_CHIP';
 
-export const setAddChip = (amount) => ({
+export const addChip = (amount) => ({
   type: ADD_CHIP,
-  payload: anmout,
+  payload: amount,
+});
+
+export const betChip = () => ({
+  type: BET_CHIP,
 });
