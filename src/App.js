@@ -176,58 +176,89 @@ function App() {
           <h1>You've lost it all!</h1>
         </div>
       ) : (
-        <div>
-          <StarterCard
-            cardList={dealerCards}
-            gameState={gameState}
-            dealer={true}
-          />
-          <div className="center">
-            <h1>{title}</h1>
+        <div
+          className="center"
+          style={{ display: 'flex', flexDirection: 'row' }}
+        >
+          <div style={{ width: '20%' }} />
+          <div style={{ width: '40%', paddingTop: '20px' }}>
+            <StarterCard
+              cardList={dealerCards}
+              gameState={gameState}
+              dealer={true}
+            />
+            <div className="center">
+              <h1>{title}</h1>
+            </div>
+            <StarterCard
+              cardList={playerCards}
+              gameState={gameState}
+              dealer={false}
+            />
+            <div className="center">
+              <Buttons
+                Hit={Hit}
+                Stand={Stand}
+                gameState={gameState}
+                setGameState={setGameState}
+                StartGame={StartGame}
+                Reset={Reset}
+                Result={DealerHit}
+                Bet={Bet}
+                addChip={addChip}
+              />
+            </div>
           </div>
-          <StarterCard
-            cardList={playerCards}
-            gameState={gameState}
-            dealer={false}
-          />
+          <div className="bank" style={{ width: '20%' }}>
+            {gameState === BET ? (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Chip
+                  value={10}
+                  total={total}
+                  addChip={pickChip}
+                  imgSrc={ten}
+                />
+                <Chip
+                  value={20}
+                  total={total}
+                  addChip={pickChip}
+                  imgSrc={quart}
+                />
+                <Chip
+                  value={50}
+                  total={total}
+                  addChip={pickChip}
+                  imgSrc={half}
+                />
+                <Chip
+                  value={100}
+                  total={total}
+                  addChip={pickChip}
+                  imgSrc={hundo}
+                />
+                <Chip
+                  value={1000}
+                  total={total}
+                  addChip={pickChip}
+                  imgSrc={onek}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+            <div
+              style={{
+                width: 105,
+                borderRadius: 5,
+                textAlign: 'center',
+              }}
+              className="pa1 ba b--black bg-yellow"
+            >
+              <h2>{`Total: $${total}`}</h2>
+            </div>
+          </div>
         </div>
       )}
-      <div className="center">
-        <Buttons
-          Hit={Hit}
-          Stand={Stand}
-          gameState={gameState}
-          setGameState={setGameState}
-          StartGame={StartGame}
-          Reset={Reset}
-          Result={DealerHit}
-          Bet={Bet}
-          addChip={addChip}
-        />
-      </div>
-      <div className="bank">
-        <div
-          style={{
-            width: 120,
-            borderRadius: 5,
-            textAlign: 'center',
-          }}
-          className="pa1 ba b--black bg-yellow"
-        >
-          <h2>{`Total: $${total}`}</h2>
-        </div>
-        {gameState === BET ? (
-          <div>
-            <Chip value={10} total={total} addChip={pickChip} imgSrc={ten} />
-            <Chip value={20} total={total} addChip={pickChip} imgSrc={quart} />
-            <Chip value={50} total={total} addChip={pickChip} imgSrc={half} />
-            <Chip value={100} total={total} addChip={pickChip} imgSrc={hundo} />
-            <Chip value={1000} total={total} addChip={pickChip} imgSrc={onek} />
-          </div>
-        ) : (
-          <div />
-        )}
-      </div>
       {/* <div className="center">
         <h1>Dealer: {dealerScore}</h1>
       </div>

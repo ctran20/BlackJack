@@ -6,7 +6,7 @@ const Card = (props) => {
   return (
     <div
       className="bg-white dib br4 ba b--black ma1 grow shadow-5 f1 flex-column"
-      style={{ width: 160, height: 240 }}
+      style={{ width: 145, height: 220 }}
     >
       {side ? (
         <div
