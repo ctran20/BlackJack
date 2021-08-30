@@ -5,8 +5,6 @@
 
 .bank {
   display: flex;
-  border-color: white;
-  border: 1px;
   justify-content: center;
   align-items: center;
 }

@@ -3,7 +3,7 @@ import CardList from './CardList';
 
 const StarterCard = ({ gameState, cardList, dealer }) => {
   return (
-    <div className="center ma3">
+    <div className="center">
       <CardList cards={cardList} gameState={gameState} dealer={dealer} />
     </div>
   );

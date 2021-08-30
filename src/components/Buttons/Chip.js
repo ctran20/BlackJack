@@ -6,7 +6,7 @@ const Chip = ({ value, total, imgSrc, addChip }) => {
   } else {
     return (
       <img
-        style={{ width: 150 }}
+        style={{ width: 100 }}
         className="ma2 pointer grow"
         alt="chip"
         src={imgSrc}

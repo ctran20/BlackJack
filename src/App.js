@@ -123,7 +123,7 @@ function App() {
   const Stand = () => {
     setGameState(STAND);
     if (playerScore < dealerScore) {
-      setTitle('You Lose!');
+      setTitle('Dealer Win!');
       setGameState(POST);
     }
   };
@@ -208,13 +208,13 @@ function App() {
       <div className="bank">
         <div
           style={{
-            width: 150,
+            width: 120,
             borderRadius: 5,
             textAlign: 'center',
           }}
-          className="pa3 ba b--black bg-yellow"
+          className="pa1 ba b--black bg-yellow"
         >
-          <h1>{`Total: $${total}`}</h1>
+          <h2>{`Total: $${total}`}</h2>
         </div>
         {gameState === BET ? (
           <div>
