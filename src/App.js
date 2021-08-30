@@ -174,6 +174,8 @@ function App() {
       {gameState === LOSE ? (
         <div className="center f3">
           <h1>You've lost it all!</h1>
+
+          <Buttons gameState={gameState} setGameState={setGameState} />
         </div>
       ) : (
         <div
