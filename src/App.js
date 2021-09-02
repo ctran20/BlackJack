@@ -183,7 +183,7 @@ function App() {
           style={{ display: 'flex', flexDirection: 'row' }}
         >
           <div style={{ width: '20%' }} />
-          <div style={{ width: '40%', paddingTop: '20px' }}>
+          <div style={{ width: '40%', minWidth: 350, paddingTop: '20px' }}>
             <StarterCard
               cardList={dealerCards}
               gameState={gameState}
