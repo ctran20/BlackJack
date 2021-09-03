@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { setChips } from './reducers/bet';
 import './index.css';
 import App from './App';
+import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
 const rootReducer = combineReducers({ setChips });
@@ -16,7 +17,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
+serviceWorker.register();
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
