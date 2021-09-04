@@ -39,5 +39,3 @@ export const RanksValues = {
   Q: 10,
   K: 10,
 };
-
-export const Layouts = {};

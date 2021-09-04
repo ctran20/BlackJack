@@ -261,12 +261,6 @@ function App() {
           </div>
         </div>
       )}
-      {/* <div className="center">
-        <h1>Dealer: {dealerScore}</h1>
-      </div>
-      <div className="center">
-        <h1>Player: {playerScore}</h1>
-      </div> */}
     </div>
   );
 }
