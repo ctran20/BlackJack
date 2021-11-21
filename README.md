@@ -1,12 +1,10 @@
-<img src="git-imgs/logo.png" width="200" />
+<img src="git-imgs/git-logo.png" width="200" />
 
-A web apllication developed with React/JavaScript that generate a robot based on the user's input name using RoboHash API. The API will take in a string and hash it, then generate a robot based on that hash. React Hook and Redux implemented.
+A web application simulating a simple game of BlackJack 21 developed with React/JavaScript with React Hook and Redux implemented.
 
-Try adding your name or a celebrity's name and see what you would look like as a robot.
-The search box allows you to filter the robots by name. Try adding your family in and filter by last name to see if the robots have anything in common.
-Switch mode button will let you switch over to AlienFriends.
+Test you luck and see how far you can get.
 
-<img src="git-imgs/main.gif" width="600" />
+<img src="git-imgs/main.gif" width="400" />
 
 Try it out:
 
